@@ -16,11 +16,12 @@ const CustomButton: FC<CustomButtonProps> = ({
 }) => {
   return (
     <Button
+      type="button"
+      h={40}
       disabled={loading}
       leftIcon={icon}
-      size="sm"
       {...props}
-      className="bg-primary-100 hover:bg-primary-50 transition-colors disabled:bg-dark-0 text-sm md:text-base font-normal"
+      className="bg-primary-100 hover:bg-primary-50 transition-colors disabled:bg-dark-0 text-sm md:text-base font-normal "
       loading={loading}
     >
       {children}

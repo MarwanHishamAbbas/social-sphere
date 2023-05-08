@@ -1,3 +1,4 @@
 import Header from "./Header";
 import CustomButton from "./CustomButton";
-export { Header, CustomButton };
+import UserAvatar from "./UserAvatar";
+export { Header, CustomButton, UserAvatar };

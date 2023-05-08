@@ -2,6 +2,7 @@ import Image from "next/image";
 import SignInButton from "./SignInButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import UserAvatar from "./UserAvatar";
 
 const Header = async ({}) => {
   const session = await getServerSession(authOptions);
@@ -28,7 +29,7 @@ const Header = async ({}) => {
             quality={100}
           />
         </div>
-        {session ? <h1>Hello: {session.user?.name}</h1> : <SignInButton />}
+        {session ? <UserAvatar session={session} /> : <SignInButton />}
       </div>
     </header>
   );

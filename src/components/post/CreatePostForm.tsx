@@ -5,11 +5,12 @@ import { useState } from "react";
 
 import Image from "next/image";
 import CustomButton from "../common/CustomButton";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useMutation, useQueryClient } from "react-query";
+import axios, { AxiosError } from "axios";
 import { notifications } from "@mantine/notifications";
 
 const CreatePostForm = ({ image }: { image: string }) => {
+  const queryClient = useQueryClient();
   const [title, setTitle] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -18,17 +19,18 @@ const CreatePostForm = ({ image }: { image: string }) => {
     async (title: string) => await axios.post("/api/posts/create", { title }),
     {
       onError: (error) => {
-        console.log(error);
-        notifications.show({
-          title: "Error Creating New Post",
-          message: "Please Try Again Later",
-          color: "red",
-        });
+        if (error instanceof AxiosError) {
+          notifications.show({
+            title: "Error Creating New Post",
+            message: error.response?.data.message,
+            color: "red",
+          });
+        }
         setLoading(false);
       },
       onSuccess: (data) => {
+        queryClient.invalidateQueries(["posts"]);
         setTitle("");
-        console.log(data);
         setLoading(false);
         notifications.show({
           title: "Post Created Successfully",

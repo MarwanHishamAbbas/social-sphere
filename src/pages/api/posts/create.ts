@@ -22,7 +22,7 @@ export default async function handler(
     if (!title.length) {
       return res
         .status(403)
-        .json({ message: "Please write something before we can post it." });
+        .json({ message: "Please! Don't leave this empty" });
     }
     // Get User
     const prismaUser = await db.user.findUnique({

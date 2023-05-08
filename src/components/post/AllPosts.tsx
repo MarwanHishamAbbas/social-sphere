@@ -4,6 +4,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import PostCard from "./PostCard";
 import { PostsType } from "@/types/posts";
+import { Loader } from "@mantine/core";
 
 const allPosts = async () => {
   const response = await axios.get("/api/posts/allposts");
@@ -15,21 +16,24 @@ const AllPosts = () => {
     queryFn: allPosts,
     queryKey: ["posts"],
   });
-  console.log(data);
+
   if (error) return error;
-  if (isLoading) return <h1>Loading.....</h1>;
+  if (data?.length === 0) return <h1 className="text-center">No Posts Yet</h1>;
+  if (isLoading) return <Loader className="text-center w-full" />;
   return (
     <main className="flex flex-col gap-10">
       {data?.map((post) => (
-        <PostCard
-          createdAt={post.createdAt}
-          key={post.id}
-          id={post.id}
-          name={post.user.name}
-          avatar={post.user.image}
-          postTitle={post.title}
-          comments={post.comments}
-        />
+        <>
+          <PostCard
+            createdAt={post.createdAt}
+            key={post.id}
+            id={post.id}
+            name={post.user.name}
+            avatar={post.user.image}
+            postTitle={post.title}
+            comments={post.comments}
+          />
+        </>
       ))}
     </main>
   );

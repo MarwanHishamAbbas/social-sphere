@@ -1,6 +1,4 @@
-"use client";
-
-import { Button } from "@mantine/core";
+import { Loader2 } from "lucide-react";
 import { FC } from "react";
 
 interface CustomButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -15,17 +13,15 @@ const CustomButton: FC<CustomButtonProps> = ({
   ...props
 }) => {
   return (
-    <Button
-      type="button"
-      h={40}
+    <button
+      type="submit"
       disabled={loading}
-      leftIcon={icon}
       {...props}
-      className="bg-primary-100 hover:bg-primary-50 transition-colors disabled:bg-dark-0 text-sm md:text-base font-normal "
-      loading={loading}
+      className="bg-primary-100 hover:bg-primary-50 transition-colors disabled:bg-dark-0 text-sm md:text-base font-normal px-3 py-2 rounded-md flex items-center gap-2"
     >
+      {loading ? <Loader2 className="animate-spin" /> : icon}
       {children}
-    </Button>
+    </button>
   );
 };
 

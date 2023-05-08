@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import "./globals.css";
+import "@/styles/globals.css";
 import { Montserrat } from "next/font/google";
+import { Header } from "@/components/common";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -16,8 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="bg-dark-100">
-      <body className={montserrat.className}>{children}</body>
+    <html lang="en" className="bg-dark-100 text-white">
+      <body className={montserrat.className}>
+        {/* @ts-expect-error Server Component */}
+        <Header />
+        <main className="mt-32 container mx-auto px-2 md:px-0">{children}</main>
+      </body>
     </html>
   );
 }

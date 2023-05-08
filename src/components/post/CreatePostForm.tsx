@@ -7,6 +7,7 @@ import Image from "next/image";
 import CustomButton from "../common/CustomButton";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { notifications } from "@mantine/notifications";
 
 const CreatePostForm = ({ image }: { image: string }) => {
   const [title, setTitle] = useState<string>("");
@@ -18,12 +19,22 @@ const CreatePostForm = ({ image }: { image: string }) => {
     {
       onError: (error) => {
         console.log(error);
+        notifications.show({
+          title: "Error Creating New Post",
+          message: "Please Try Again Later",
+          color: "red",
+        });
         setLoading(false);
       },
       onSuccess: (data) => {
         setTitle("");
         console.log(data);
         setLoading(false);
+        notifications.show({
+          title: "Post Created Successfully",
+          message: "Timeline updated automatically",
+          color: "green",
+        });
       },
     }
   );
@@ -31,6 +42,7 @@ const CreatePostForm = ({ image }: { image: string }) => {
   const createPostHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setLoading(true);
       mutate(title);
     } catch (error) {
       throw new Error("Error Creating new post");

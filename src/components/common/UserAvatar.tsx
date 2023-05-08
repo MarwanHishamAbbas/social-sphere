@@ -19,7 +19,7 @@ function UserAvatar({ session }: { session: Session }) {
     }
   };
   return (
-    <Menu shadow="md" width={200}>
+    <Menu closeOnItemClick={false} shadow="md" width={200}>
       <Menu.Target>
         <Avatar
           radius="xl"
@@ -29,7 +29,7 @@ function UserAvatar({ session }: { session: Session }) {
         />
       </Menu.Target>
 
-      <Menu.Dropdown bg={"dark"} className="border-none ">
+      <Menu.Dropdown className="border-none ">
         <Menu.Label pb={0} className="text-white">
           {session.user?.name}
         </Menu.Label>
@@ -37,14 +37,8 @@ function UserAvatar({ session }: { session: Session }) {
         <Menu.Divider />
         <Menu.Item
           onClick={signOutHandler}
-          className="transition-all hover:bg-dark-50"
-          icon={
-            loading ? (
-              <Loader2 className="animate-spin text-dark-50" />
-            ) : (
-              <LogOut />
-            )
-          }
+          className="transition-all"
+          icon={loading ? <Loader2 className="animate-spin " /> : <LogOut />}
           color="red"
         >
           Sign Out

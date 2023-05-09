@@ -1,11 +1,12 @@
 "use client";
 
-import { Button, Divider, Menu } from "@mantine/core";
+import { Button, Divider } from "@mantine/core";
+import { useSession } from "next-auth/react";
 import { formatDistance } from "date-fns";
 import { useMutation, useQueryClient } from "react-query";
 import {
   Clock,
-  Delete,
+  Trash,
   MessageCircle,
   MoreVertical,
   Share,
@@ -14,6 +15,8 @@ import {
 import Image from "next/image";
 import { FC, useState } from "react";
 import axios from "axios";
+import { authOptions } from "@/lib/auth";
+import PostOptions from "./PostOptions";
 
 interface PostCardProps {
   id: string;
@@ -22,7 +25,6 @@ interface PostCardProps {
   postTitle: string;
   comments: any;
   createdAt: any;
-  image: string;
   email: string;
 }
 
@@ -33,12 +35,12 @@ const PostCard: FC<PostCardProps> = ({
   postTitle,
   comments,
   email,
-  image,
   createdAt,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
   const timestamp = formatDistance(new Date(createdAt), new Date());
+  const { data: session } = useSession();
   const queryClient = useQueryClient();
   const { mutate } = useMutation(
     async (id: string) =>
@@ -86,6 +88,7 @@ const PostCard: FC<PostCardProps> = ({
             </span>
           </div>
         </div>
+        <PostOptions id={id} />
       </div>
       <p className="my-10">{postTitle}</p>
       <Button.Group>
@@ -114,10 +117,10 @@ const PostCard: FC<PostCardProps> = ({
       </Button.Group>
       <Divider my={10} />
 
-      {image && (
+      {session && (
         <form className="flex items-center gap-5 mt-5">
           <Image
-            src={image || ""}
+            src={session?.user?.image || ""}
             height={50}
             width={50}
             alt="User Image"

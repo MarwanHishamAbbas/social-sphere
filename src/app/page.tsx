@@ -7,9 +7,9 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <main className="flex flex-col gap-16">
-      {session && <CreatePostForm image={session.user?.image || ""} />}
+      {session && <CreatePostForm />}
       {/* @ts-expect-error Server Component */}
-      <AllPosts image={(session && session.user?.image) || ""} />
+      <AllPosts />
     </main>
   );
 }

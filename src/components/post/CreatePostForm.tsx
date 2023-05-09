@@ -2,14 +2,15 @@
 
 import { ImageIcon, Paperclip, MapPin, Smile, PlusCircle } from "lucide-react";
 import { useState } from "react";
-
 import Image from "next/image";
 import CustomButton from "../common/CustomButton";
 import { useMutation, useQueryClient } from "react-query";
 import axios, { AxiosError } from "axios";
 import { notifications } from "@mantine/notifications";
+import { useSession } from "next-auth/react";
 
-const CreatePostForm = ({ image }: { image: string }) => {
+const CreatePostForm = () => {
+  const { data: session } = useSession();
   const queryClient = useQueryClient();
   const [title, setTitle] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -59,7 +60,7 @@ const CreatePostForm = ({ image }: { image: string }) => {
     >
       <div className="flex items-center gap-5 mb-10">
         <Image
-          src={image || ""}
+          src={session?.user?.image || ""}
           height={50}
           width={50}
           alt="User Image"

@@ -41,29 +41,6 @@ const PostCard: FC<PostCardProps> = ({
   const [comment, setComment] = useState<string>("");
   const timestamp = formatDistance(new Date(createdAt), new Date());
   const { data: session } = useSession();
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation(
-    async (id: string) =>
-      await axios.delete("/api/posts/deletePost", { data: id }),
-    {
-      onError: (error) => {
-        console.log(error);
-      },
-      onSuccess: (data) => {
-        console.log(data);
-        queryClient.invalidateQueries("getAuthPosts");
-      },
-    }
-  );
-
-  const deletePostHandler = () => {
-    try {
-      setLoading(true);
-      mutate(id);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div
@@ -88,7 +65,7 @@ const PostCard: FC<PostCardProps> = ({
             </span>
           </div>
         </div>
-        <PostOptions id={id} />
+        {session?.user?.email === email && <PostOptions id={id} />}
       </div>
       <p className="my-10">{postTitle}</p>
       <Button.Group>

@@ -11,18 +11,19 @@ interface PostOptionsProps {
 }
 
 const PostOptions: FC<PostOptionsProps> = ({ id }) => {
+  console.log(id);
   const [loading, setLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const { mutate } = useMutation(
-    async (id: string) =>
-      await axios.delete("/api/posts/deletePost", { data: id }),
+    async (id: string) => await axios.post("/api/posts/delete", { id }),
     {
       onError: (error) => {
         console.log(error);
       },
       onSuccess: (data) => {
+        setLoading(false);
         console.log(data);
-        queryClient.invalidateQueries("getAuthPosts");
+        queryClient.invalidateQueries(["posts"]);
       },
     }
   );

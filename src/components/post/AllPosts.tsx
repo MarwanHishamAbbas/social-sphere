@@ -11,7 +11,7 @@ const allPosts = async () => {
   return response.data;
 };
 
-const AllPosts = () => {
+const AllPosts = ({ image }: { image: string }) => {
   const { data, error, isLoading } = useQuery<PostsType[]>({
     queryFn: allPosts,
     queryKey: ["posts"],
@@ -23,17 +23,17 @@ const AllPosts = () => {
   return (
     <main className="flex flex-col gap-10">
       {data?.map((post) => (
-        <>
-          <PostCard
-            createdAt={post.createdAt}
-            key={post.id}
-            id={post.id}
-            name={post.user.name}
-            avatar={post.user.image}
-            postTitle={post.title}
-            comments={post.comments}
-          />
-        </>
+        <PostCard
+          image={image}
+          createdAt={post.createdAt}
+          key={post.id}
+          id={post.id}
+          name={post.user.name}
+          email={post.user.email}
+          avatar={post.user.image}
+          postTitle={post.title}
+          comments={post.comments}
+        />
       ))}
     </main>
   );

@@ -23,7 +23,7 @@ export default function RootLayout({
         <body className={montserrat.className}>
           {/* @ts-expect-error Server Component */}
           <Header />
-          <main className="mt-32 container mx-auto px-2 md:px-0">
+          <main className="mt-32 md:w-1/2 container mx-auto px-2 md:px-0">
             {children}
           </main>
         </body>

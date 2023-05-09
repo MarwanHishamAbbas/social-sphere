@@ -9,7 +9,7 @@ export default async function Home() {
     <main className="flex flex-col gap-16">
       {session && <CreatePostForm image={session.user?.image || ""} />}
       {/* @ts-expect-error Server Component */}
-      <AllPosts />
+      <AllPosts image={(session && session.user?.image) || ""} />
     </main>
   );
 }

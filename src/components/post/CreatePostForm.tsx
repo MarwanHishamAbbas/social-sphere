@@ -55,7 +55,7 @@ const CreatePostForm = ({ image }: { image: string }) => {
     <form
       onSubmit={createPostHandler}
       action=""
-      className="bg-dark-50 p-5 md:p-8 rounded-md"
+      className="bg-dark-50 p-5 md:p-8 rounded-md border-dark-0 border-[1px]"
     >
       <div className="flex items-center gap-5 mb-10">
         <Image
@@ -67,9 +67,9 @@ const CreatePostForm = ({ image }: { image: string }) => {
         />
         <textarea
           name="title"
-          className="bg-dark-0 w-full p-3 md:p-4 rounded-3xl max-h-64"
+          className="bg-dark-0 w-full p-3 md:p-4 rounded-3xl max-h-64 min-h-[60px]"
           placeholder="What's in your mind?"
-          rows={2}
+          rows={1}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
